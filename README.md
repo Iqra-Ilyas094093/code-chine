@@ -1,11 +1,9 @@
 # Flutter Authentication App
 
 A clean and minimal Flutter authentication application featuring onboarding, sign in, registration, and a home screen powered by Firebase Authentication, Cloud Firestore, and Google Sign-In, built with MVVM architecture using Provider for state management.
-![image_alt](https://github.com/Iqra-Ilyas094093/code-chine/blob/aca96a9b0a0c84c59eca1bffb22c3ecd8919daa0/WhatsApp%20Image%202026-03-02%20at%201.03.44%20PM%20(1).jpeg)
-![image_alt](https://github.com/Iqra-Ilyas094093/code-chine/blob/aca96a9b0a0c84c59eca1bffb22c3ecd8919daa0/WhatsApp%20Image%202026-03-02%20at%201.03.44%20PM.jpeg)
-![image_alt](https://github.com/Iqra-Ilyas094093/code-chine/blob/aca96a9b0a0c84c59eca1bffb22c3ecd8919daa0/WhatsApp%20Image%202026-03-02%20at%201.03.43%20PM.jpeg)
-![image_alt](https://github.com/Iqra-Ilyas094093/code-chine/blob/aca96a9b0a0c84c59eca1bffb22c3ecd8919daa0/WhatsApp%20Image%202026-03-02%20at%201.03.43%20PM%20(1).jpeg)
-![image_alt](https://github.com/Iqra-Ilyas094093/code-chine/blob/aca96a9b0a0c84c59eca1bffb22c3ecd8919daa0/WhatsApp%20Image%202026-03-02%20at%201.03.42%20PM.jpeg)
+
+![image_alt](https://github.com/Iqra-Ilyas094093/code-chine/blob/5f34595aeeb5fa2cf167341aed930b909f48932a/Screenshot%202026-03-02%20132443.png)
+
 ## App Overview
 
 This app provides a complete authentication flow for mobile users with a smooth onboarding experience. It demonstrates best practices in Flutter development including separation of concerns, reactive state management, and Firebase integration.
