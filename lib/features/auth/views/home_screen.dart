@@ -9,8 +9,8 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final vm = context.watch<AuthViewModel>();  // watch, not read — rebuilds on user change
-    final user = vm.currentUser;               // the real UserModel from Firestore
+    final vm = context.watch<AuthViewModel>();
+    final user = vm.currentUser;
     final size = MediaQuery.of(context).size;
     final isTablet = size.width > 600;
 
@@ -26,8 +26,6 @@ class HomeScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const SizedBox(height: 24),
-
-              // ── Top Bar ──────────────────────────────────
               Row(
                 children: [
                   Column(
@@ -40,7 +38,6 @@ class HomeScreen extends StatelessWidget {
                       ),
                       const SizedBox(height: 2),
                       Text(
-                        // Show real name, fallback gracefully
                         user?.name ?? 'Welcome!',
                         style: GoogleFonts.poppins(
                             fontSize: 20, fontWeight: FontWeight.w700,
@@ -49,8 +46,6 @@ class HomeScreen extends StatelessWidget {
                     ],
                   ),
                   const Spacer(),
-                  // ... notification bell stays same ...
-                  // Avatar — show first letter of name
                   Container(
                     width: 42, height: 42,
                     decoration: BoxDecoration(
@@ -59,7 +54,6 @@ class HomeScreen extends StatelessWidget {
                     ),
                     child: Center(
                       child: Text(
-                        // First letter of their name as avatar
                         (user?.name.isNotEmpty == true)
                             ? user!.name[0].toUpperCase()
                             : 'U',
@@ -76,7 +70,6 @@ class HomeScreen extends StatelessWidget {
 
               const SizedBox(height: 16),
 
-              // ── User Info Card (new — shows Firestore data) ──
               Container(
                 width: double.infinity,
                 padding: const EdgeInsets.all(16),
@@ -136,7 +129,7 @@ class HomeScreen extends StatelessWidget {
                           padding: const EdgeInsets.symmetric(
                               horizontal: 8, vertical: 3),
                           decoration: BoxDecoration(
-                            color: const Color(0xFF43C59E).withOpacity(0.12),
+                            color: const Color(0xFF43C59E).withValues(alpha: 0.12),
                             borderRadius: BorderRadius.circular(6),
                           ),
                           child: Text('Active',
@@ -146,7 +139,6 @@ class HomeScreen extends StatelessWidget {
                         ),
                         const SizedBox(height: 4),
                         Text(
-                          // Show join date from Firestore
                           'Joined ${_formatDate(user?.createdAt)}',
                           style: GoogleFonts.poppins(
                               fontSize: 10, color: AppColors.textSecondary),
@@ -158,12 +150,9 @@ class HomeScreen extends StatelessWidget {
               ),
 
               const SizedBox(height: 16),
-              // ── Logout Button ────────────────────────────
               GestureDetector(
                 onTap: () async {
-                  // Navigator.pop(context);          // Close dialog first
-                  await vm.logout();           // Call real Firebase logout
-                  // vm.logout() already sets screen to onboarding and clears user
+                  await vm.logout();
                 },
                 child: Container(
                   width: double.infinity,

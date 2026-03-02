@@ -12,13 +12,11 @@ class AuthException implements Exception {
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-
-  // ✅ v7 way — use the singleton instance, no constructor
-  GoogleSignIn get _googleSignIn => GoogleSignIn.instance;
+  GoogleSignIn get _googleSignIn => GoogleSignIn();
 
   CollectionReference get _usersCollection => _firestore.collection('users');
 
-  // ── REGISTER ──────────────────────────────────────────────
+  //register krna hai yha
 
   Future<UserModel> registerWithEmail({
     required String name,
@@ -52,7 +50,6 @@ class AuthService {
     }
   }
 
-  // ── SIGN IN ───────────────────────────────────────────────
 
   Future<UserModel> signInWithEmail({
     required String email,
@@ -79,7 +76,7 @@ class AuthService {
     }
   }
 
-  // ── GOOGLE SIGN IN ────────────────────────────────────────
+  //google ka OAuth ki authentication krni hai
 
   Future<UserModel> signInWithGoogle() async {
     try {
@@ -97,17 +94,14 @@ class AuthService {
         idToken: googleAuth.idToken,
       );
 
-      // Step 5 — sign into Firebase
       final userCredential = await _auth.signInWithCredential(credential);
       final firebaseUser = userCredential.user!;
 
-      // Step 6 — check Firestore for existing user
       final doc = await _usersCollection.doc(firebaseUser.uid).get();
 
       if (doc.exists) {
         return UserModel.fromMap(doc.data() as Map<String, dynamic>);
       } else {
-        // First time Google login — save to Firestore
         final user = UserModel(
           uid: firebaseUser.uid,
           name: firebaseUser.displayName ?? 'User',
@@ -131,16 +125,18 @@ class AuthService {
     }
   }
 
-  // ── SIGN OUT ──────────────────────────────────────────────
+  //ab sign out krna hai
+
 
   Future<void> signOut() async {
     await Future.wait([
       _auth.signOut(),
-      _googleSignIn.signOut(),  // ✅ same in v7
+      _googleSignIn.signOut(),
     ]);
   }
 
-  // ── FETCH USER ────────────────────────────────────────────
+
+  //ye data fetch krne k liye
 
   Future<UserModel?> fetchUser(String uid) async {
     final doc = await _usersCollection.doc(uid).get();
@@ -149,8 +145,8 @@ class AuthService {
   }
 
   User? get currentFirebaseUser => _auth.currentUser;
+//error debug krne k liye
 
-  // ── ERROR MAPPING ─────────────────────────────────────────
 
   String _mapFirebaseError(String code) {
     switch (code) {

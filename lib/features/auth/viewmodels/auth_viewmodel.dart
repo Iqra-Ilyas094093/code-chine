@@ -12,16 +12,17 @@ class AuthViewModel extends ChangeNotifier {
   AuthScreen _screen = AuthScreen.onboarding;
   String? _errorMessage;
 
-  // The currently logged-in user — displayed on HomeScreen
   UserModel? _currentUser;
 
-  // ── Getters ───────────────────────────────────────────────
+
+  //in 4ofro ko private bnaye ge ab
   AuthState get state => _state;
   AuthScreen get screen => _screen;
   String? get errorMessage => _errorMessage;
   UserModel? get currentUser => _currentUser;
 
-  // ── Form Controllers ──────────────────────────────────────
+
+  //page controllers
   final signInEmailController = TextEditingController();
   final signInPasswordController = TextEditingController();
 
@@ -39,7 +40,7 @@ class AuthViewModel extends ChangeNotifier {
   bool get obscureRegisterPassword => _obscureRegisterPassword;
   int get currentOnboardingPage => _currentOnboardingPage;
 
-  // ── Navigation ────────────────────────────────────────────
+
   void goToScreen(AuthScreen screen) {
     _screen = screen;
     _state = AuthState.idle;
@@ -62,7 +63,8 @@ class AuthViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  // ── Sign In ───────────────────────────────────────────────
+
+
   Future<void> signIn() async {
     if (signInEmailController.text.isEmpty ||
         signInPasswordController.text.isEmpty) {
@@ -77,16 +79,15 @@ class AuthViewModel extends ChangeNotifier {
     notifyListeners();
 
     try {
-      // Call service — either returns UserModel or throws AuthException
       _currentUser = await _authService.signInWithEmail(
         email: signInEmailController.text,
         password: signInPasswordController.text,
       );
 
       _state = AuthState.success;
-      _screen = AuthScreen.home; // Navigate to home on success
+      _screen = AuthScreen.home;
     } on AuthException catch (e) {
-      _errorMessage = e.message; // Show exact message from service
+      _errorMessage = e.message;
       _state = AuthState.error;
     } catch (_) {
       _errorMessage = 'Something went wrong. Please try again.';
@@ -96,7 +97,8 @@ class AuthViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  // ── Register ──────────────────────────────────────────────
+
+
   Future<void> register() async {
     if (registerNameController.text.isEmpty ||
         registerEmailController.text.isEmpty ||
@@ -133,7 +135,8 @@ class AuthViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  // ── Google Sign In ────────────────────────────────────────
+
+
   Future<void> signInWithGoogle() async {
     _state = AuthState.loading;
     _errorMessage = null;
@@ -157,14 +160,15 @@ class AuthViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  // ── Logout ────────────────────────────────────────────────
+
+
   Future<void> logout() async {
-    await _authService.signOut();  // Signs out from Firebase + Google
-    _currentUser = null;           // Clear cached user data
+    await _authService.signOut();
+    _currentUser = null;
     _screen = AuthScreen.onboarding;
     _state = AuthState.idle;
 
-    // Clear all form fields
+
     signInEmailController.clear();
     signInPasswordController.clear();
     registerNameController.clear();

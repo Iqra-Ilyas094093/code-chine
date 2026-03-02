@@ -12,6 +12,5 @@ class AppColors {
   static const Color inputFill = Color(0xFFFAFAFF);
   static const Color black = Color(0xFF111111);
   static const Color google = Color(0xFFEA4335);
-  static const Color facebook = Color(0xFF1877F2);
   static const Color hint = Color(0xFFAAAAAA);
 }
